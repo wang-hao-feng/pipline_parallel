@@ -1,4 +1,3 @@
-import os
 import math
 
 import warnings
@@ -6,14 +5,13 @@ warnings.filterwarnings('ignore', category=UserWarning)
 
 import torch
 import torch.nn as nn
-from torch.amp.autocast_mode import autocast
 
 from accelerate import init_empty_weights
 from transformers import AutoConfig, AutoTokenizer
 from transformers import PreTrainedTokenizer, LlavaNextProcessor
 from transformers.modeling_outputs import CausalLMOutputWithPast, BaseModelOutputWithPast
 
-from modules.internvl2.modeling_internvl_chat import InternVLChatModel, get_conv_template
+from modules.internvl2.modeling_internvl_chat import InternVLChatModel
 from modules.internvl2.modeling_internlm2 import InternLM2ForCausalLM, InternLM2Model, _import_flash_attn
 
 from modules.lora import wrap_linear

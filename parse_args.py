@@ -4,7 +4,7 @@ import argparse
 from models import model_regisiter
 from prompt import prompt_regisiter
 from loss_fn import loss_fn_regisiter, sim_fn_regisiter
-from dataset import dataset_regisiter
+from dataset import dataset_regisiter, collate_fn_regisiter
 from prompt_fn import prompt_fn_regisiter, image_token_prompt_regisiter
 
 def parse_args():
@@ -35,6 +35,7 @@ def parse_args():
     # 数据集
     parser.add_argument('-d', '--dataset', type=str, choices=dataset_regisiter.keys())
     parser.add_argument('-dp', '--dataset-path', type=str)
+    parser.add_argument('-cf', '--collate-fn', type=str, choices=collate_fn_regisiter.keys())
     parser.add_argument('--vsr_split_type', type=str, choices=['random', 'zeroshot'])
 
     parser.add_argument('-bs', '--batch-size', type=int)

@@ -42,5 +42,5 @@ def SpecialImageToken(prompt:str, images:Image.Image|list[Image.Image]) -> str:
     return prompt.replace('[IMAGE]', '<image>' * (1 if isinstance(images, Image.Image) else len(images)))
 
 @image_token_prompt_regisiter('empty')
-def Empty(prompt:str, image:Image.Image) -> str:
+def Empty(prompt:str, images:Image.Image|list[Image.Image]) -> str:
     return prompt.replace('[IMAGE]', '')
