@@ -23,6 +23,7 @@ IMAGE_TOKEN_PROMPT="special_image_token"
 
 DATASET="rotate-caption"
 DATASET_PATH="~/datasets/ROTATE"
+ACCUMULATE_STEP=1
 COLLATE_FN="sft"
 
 MODEL="InternVL2-8B"
@@ -44,6 +45,7 @@ WARM_UP_START_LR=3e-5
 WARM_UP_STEP=100
 EVAL_STEP=500
 SAVE_STEP=500
+MIN_SAVE_STEP=0
 TOTAL_STEP=5000
 TASK="sft"
 NEGATIVE_NUM=2
@@ -55,6 +57,7 @@ srun --unbuffered torchrun --nproc_per_node ${NODE_NUM} \
                                     -itp ${IMAGE_TOKEN_PROMPT} \
                                     -d ${DATASET} \
                                     -dp ${DATASET_PATH} \
+                                    -as ${ACCUMULATE_STEP} \
                                     -cf ${COLLATE_FN} \
                                     -m ${MODEL} \
                                     -mp ${MODEL_PATH} \
@@ -67,14 +70,15 @@ srun --unbuffered torchrun --nproc_per_node ${NODE_NUM} \
                                     -bs ${BATCH_SIZE} \
                                     -mbs ${MICRO_BATCH_SIZE} \
                                     --max_token_num ${MAX_TOKEN_NUM} \
-                                    -lr ${LEARNING_RATE}\
-                                    -wd ${WEIGHT_DECAY}\
-                                    -ml ${MIN_LR}\
-                                    -wusl ${WARM_UP_START_LR}\
-                                    -ws ${WARM_UP_STEP}\
-                                    -es ${EVAL_STEP}\
-                                    -ss ${SAVE_STEP}\
-                                    -ts ${TOTAL_STEP}\
+                                    -lr ${LEARNING_RATE} \
+                                    -wd ${WEIGHT_DECAY} \
+                                    -ml ${MIN_LR} \
+                                    -wusl ${WARM_UP_START_LR} \
+                                    -ws ${WARM_UP_STEP} \
+                                    -es ${EVAL_STEP} \
+                                    -ss ${SAVE_STEP} \
+                                    -mss ${MIN_SAVE_STEP} \
+                                    -ts ${TOTAL_STEP} \
                                     -t ${TASK} \
                                     --sim_fn ${SIM} \
                                     -nn ${NEGATIVE_NUM} \

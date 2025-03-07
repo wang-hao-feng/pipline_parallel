@@ -146,13 +146,14 @@ if __name__ == "__main__":
         for inputs, labels in train_loader:
             if step >= args.total_steps:
                 break
-            optimizer.zero_grad()
-            # inputs, labels = next(train_loader)
+            if step % args.accumulate_step == 0:
+                optimizer.zero_grad()
             outputs, losses = OneFOneB(train_schedule, inputs, labels)
             del inputs
             del labels
-            optimizer.step()
-            lr_scheduler.step()
+            if step % args.accumulate_step == 0:
+                optimizer.step()
+                lr_scheduler.step()
             lr = lr_scheduler.get_last_lr()[0]
             step_end_time = time.time()
             step_time = step_end_time - step_start_time
@@ -166,7 +167,7 @@ if __name__ == "__main__":
             del losses
             gc.collect()
             # print(f'rank{rank} gpu:{torch.cuda.max_memory_allocated(device=device) / 1024**3}G')
-            if (step + 1) % args.save_steps == 0 and step > 0:
+            if (step + 1) % args.save_steps == 0 and step > args.min_save_steps:
             # if step % args.save_steps == 0:
                 save_path = os.path.expanduser(os.path.join(args.result_path, str(step+1)))
                 if rank == 0:

@@ -40,6 +40,7 @@ def parse_args():
 
     parser.add_argument('-bs', '--batch-size', type=int)
     parser.add_argument('-mbs', '--micro-batch-size', type=int)
+    parser.add_argument('-as', '--accumulate_step', type=int, default=1)
 
     # prompt
     parser.add_argument('-tp', '--text_prompt', type=str, choices=prompt_regisiter.keys())
@@ -58,6 +59,7 @@ def parse_args():
     parser.add_argument('-ws', '--warmup_steps', type=int, default=100)
     parser.add_argument('-es', '--eval_steps', type=int, default=200)
     parser.add_argument('-ss', '--save_steps', type=int, default=200)
+    parser.add_argument('-mss', '--min_save_steps', type=int, default=0)
     parser.add_argument('-ts', '--total_steps', type=int, default=10000)
     parser.add_argument('--seed', type=int, default=42)
 
