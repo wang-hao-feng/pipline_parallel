@@ -58,6 +58,7 @@ def parse_args():
     parser.add_argument('-wusl', '--warm_up_start_lr', type=float, default=3e-5)
     parser.add_argument('-ws', '--warmup_steps', type=int, default=100)
     parser.add_argument('-es', '--eval_steps', type=int, default=200)
+    parser.add_argument('-mes', '--min_eval_steps', type=int, default=0)
     parser.add_argument('-ss', '--save_steps', type=int, default=200)
     parser.add_argument('-mss', '--min_save_steps', type=int, default=0)
     parser.add_argument('-ts', '--total_steps', type=int, default=10000)

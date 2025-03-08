@@ -184,15 +184,13 @@ if __name__ == "__main__":
                               world_size=world_size, 
                               group=pp_group)
                 step_start_time = time.time()
-            if (step + 1) %  args.eval_steps == 0 and step > 0:
+            if (step + 1) %  args.eval_steps == 0 and step > args.min_eval_steps:
             # if step %  args.eval_steps == 0:
                 evaluate_start_time = time.time()
                 total_loss = []
                 stage.submod = stage.submod.eval()
                 with torch.no_grad():
                     for i, (inputs, labels) in tqdm(enumerate(val_loader), total=len(val_loader), desc=f'evaluate{step // args.eval_steps}'):
-                        if i > 50:
-                            break
                         optimizer.zero_grad()
                         outputs, _ = OneFOneB(eval_schedule, inputs)
                         if rank == world_size - 1:
